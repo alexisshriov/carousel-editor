@@ -3,4 +3,18 @@
   width: 500px;
   height: 500px;
   margin: 0 auto;
+
+  .view-container{
+    background-color: black;
+    width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .carousel-images{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    transition: left 1s;
+  }
 }
