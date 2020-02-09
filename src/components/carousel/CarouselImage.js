@@ -1,7 +1,6 @@
 import React from 'react'
 
 import './CarouselImage.scss';
-import letterBoardIc from '../../images/letterBoardIc.jpg'
 
 const CarouselImage = () => {
   return(
