@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import allImages from '../../carouselImages.json';
+// import allImages from '../../carouselImages.json';
 import './ImageSelector.scss'
 
 // const images=[
@@ -8,35 +8,46 @@ import './ImageSelector.scss'
 //   matchingFriends, matchingZoo,orderItCake, orderItToyN, paintPotBlue, paintPotRed, petIc, princessIc, robotIc, spaceIc
 // ]
 
-const Carousel = ({carouselImages, setCarouselImages}) => {
-  const [images, setImages] = useState(allImages.carouselImages)
+const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCarouselImages}) => {
+  // const [images, setImages] = useState(allImages.carouselImages)
   const [selectedImages, setSelectedImages] = useState([])
 
-  const handleImgClick = (newImgName) => {
-    if(!selectedImages.includes(newImgName)){
-      const newSelectedImages = [...selectedImages, newImgName].sort()
+  const handleImgClick = (img) => {
+    debugger
+    if(!selectedImages.map(image => image.imageName).includes(img.imageName)){
+      const newSelectedImages = [...selectedImages, img].sort(compare);
 
       setSelectedImages(newSelectedImages)
     }
   }
 
   const handleAddBtnClick = () => {
-    const newCarouselImages = [...carouselImages, ...selectedImages].sort()
-    const newImages = images.filter(item => !selectedImages.includes(item.imageName)).sort()
+    const newCarouselImages = [...carouselImages, ...selectedImages].sort(compare)
+    const newSelectorImages = selectorImages.filter(item => !selectedImages.includes(item)).sort(compare)
 
     setCarouselImages(newCarouselImages)
-    setImages(newImages)
+    setSelectorImages(newSelectorImages)
     setSelectedImages([])
+  }
+
+  const compare = ( a, b ) => {
+    if ( a.imageName < b.imageName ){
+      return -1;
+    }
+    if ( a.imageName > b.imageName ){
+      return 1;
+    }
+    return 0;
   }
 
   return(
     <div className="image-selector">
-      {images.map((image, index) =>  {
-        const isImgSelected = selectedImages.includes(image.imageName)
-        return  <img key={index} className={isImgSelected?'selected-image': null} src={`/images/${image.imageName}`} onClick={() => handleImgClick(image.imageName)} alt="selectable-image" />})
+      {selectorImages.map((image, index) =>  {
+        const isImgSelected = selectedImages.map(img => img.imageName).includes(image.imageName)
+        return  <img key={index} className={isImgSelected?'selected-image': null} src={`/images/${image.imageName}`} onClick={() => handleImgClick(image)} alt="selectable-image" />})
       }
-      <button onClick={handleAddBtnClick}>Add Images</button>
+      <button onClick={handleAddBtnClick}>Add</button>
     </div> 
   )
 }
-export default Carousel;
+export default ImageSelector;
