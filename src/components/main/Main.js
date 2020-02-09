@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 
 import Carousel from '../carousel/Carousel'
 import ImageSelector from '../ImageSelector/ImageSelector';
@@ -21,6 +21,10 @@ const Main = () => {
   const [carouselImages, setCarouselImages] = useState([])
   debugger
   const [selectorImages, setSelectorImages] = useState(allImages.carouselImages) //useState(['letterBoardIc.jpg', 'listen-hat.jpg', 'listen-v02.jpg', 'listeningBell.jpg', 'listeningCap.jpg'])
+
+  useEffect(() => {
+    setImgSize(carouselViewSize / visibleSlots)
+  }, [visibleSlots])
 
   return (
     

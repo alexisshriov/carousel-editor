@@ -35,7 +35,6 @@ const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode })
   }
 
   return (
-
     <div className="carousel-slot" onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <img className={getImageClasses()} src={`/images/${img.imageName}`} style={{ minWidth: imgSize, height: imgSize }} />
       <p className="image-caption">{mode === 'View' && displayCaption && img.imageCaption}</p>
