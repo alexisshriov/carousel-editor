@@ -1,19 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Toggle from 'react-toggle';
-import "react-toggle/style.css"
+import "react-toggle/style.css";
 import { imgContext } from '../../context';
-
 import CarouselSlot from './CarouselSlot';
 import './Carousel.scss';
 
-const Carousel = ({ visibleSlots, carouselViewSize, imgSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages }) => {
+const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages }) => {
   // const [imgSize, setImgSize] = useContext(imgContext)
   // const [visibleSlots, setVisibleSlots] = useState(2);  //param modified by user
 
   //const offSet = children.length % 2 === 0 ? (imgSize/visibleSlots) / 2 : 0;
 
   const [position, setPosition] = useState(0);
-  const [mode, setMode] = useState('View')
+  const [mode, setMode] = useState('View');
   const [selectedImages, setSelectedImages] = useState([]);
 
   // const [offset, setOffset] = useState(offSet);
@@ -25,8 +24,13 @@ const Carousel = ({ visibleSlots, carouselViewSize, imgSize, children, selectorI
       setPosition(position - carouselViewSize);
   }
 
+  useEffect(() => {
+    setPosition(0)
+  }, [selectorImages, carouselImages])
+
   const toggleMode = () => {
     const newMode = mode === 'View' ? 'Edit' : 'View';
+
     setMode(newMode)
   }
 
@@ -37,14 +41,18 @@ const Carousel = ({ visibleSlots, carouselViewSize, imgSize, children, selectorI
     setSelectorImages(newSelectorImages)
     setCarouselImages(newCarouselImages)
     setSelectedImages([])
-
   }
 
-  const compare = ( a, b ) => {
-    if ( a.imageName < b.imageName ){
+  const onSelectChange = (event) => {
+    debugger
+    setVisibleSlots(event.target.value);
+  }
+
+  const compare = (a, b) => {
+    if (a.imageName < b.imageName) {
       return -1;
     }
-    if ( a.imageName > b.imageName ){
+    if (a.imageName > b.imageName) {
       return 1;
     }
     return 0;
@@ -53,23 +61,29 @@ const Carousel = ({ visibleSlots, carouselViewSize, imgSize, children, selectorI
   return (
     <div className="carousel">
       <p>Carousel</p>
-      <Toggle defaultChecked={false} icons={false} onChange={toggleMode} /><span>{mode} Mode</span>
+      <div className="carousel-controls">
+        <div className="mode-selector">
+          <Toggle defaultChecked={false} icons={false} onChange={toggleMode} /><span>{mode} Mode</span>
+        </div>
+        <div className="items-selector">
+          <label>Items per Slide:</label>
+          <select onChange={onSelectChange}>{[2, 3, 4, 5].map(item => <option value={item}>{item}</option>)}</select>
+        </div>
+      </div>
 
       <div className="view-container">
         <div className="carousel-images" style={{ left: position }}>
-          { children.map(child =>  {
-            return React.cloneElement(child, { selectedImages, setSelectedImages })
+          {children.map(child => {
+            return React.cloneElement(child, { selectedImages, setSelectedImages, mode })
           })}
         </div>
       </div>
       <button onClick={() => handleClick('right')}>left</button>
       <button onClick={() => handleClick('left')}>right</button>
       <div>
-        {mode==='Edit'?<button onClick={handleDeleteBtnClick}>Delete</button>:null}
+        {mode === 'Edit' ? <button onClick={handleDeleteBtnClick}>Delete</button> : null}
       </div>
     </div>
-
-
   )
 }
 export default Carousel;

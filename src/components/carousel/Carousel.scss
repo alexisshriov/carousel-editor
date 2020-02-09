@@ -18,10 +18,22 @@
     transition: left 1s;
   }
 
-  // .selected-image{
-  //   box-sizing:border-box;
-  //   border: blue solid 5px
-  // }
+  .carousel-controls{
+    background-color: cadetblue;
+    display: flex;
+    justify-content: space-around;
 
-
+    .mode-selector{
+      span{
+        margin-left: 10px;
+      }
+    }
+  
+    .items-selector{
+      select{
+        width: 100px;
+        margin-left: 10px;
+      }
+    }
+  }
 }

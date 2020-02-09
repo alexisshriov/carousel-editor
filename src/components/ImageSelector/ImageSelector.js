@@ -13,7 +13,6 @@ const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCa
   const [selectedImages, setSelectedImages] = useState([])
 
   const handleImgClick = (img) => {
-    debugger
     if(!selectedImages.map(image => image.imageName).includes(img.imageName)){
       const newSelectedImages = [...selectedImages, img].sort(compare);
 
