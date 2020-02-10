@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
 import ImageContainer from "../common/ImageContainer";
@@ -16,7 +16,7 @@ const ImageSelector = () => {
   const carouselImages = useSelector(state => state.carouselImages)
 
   const handleImgClick = (img) => {
-    if(!selectedImages.map(image => image.imageName).includes(img.imageName)){
+    if (!selectedImages.map(image => image.imageName).includes(img.imageName)) {
       const newSelectedImages = [...selectedImages, img].sort(compare);
 
       setSelectedImages(newSelectedImages)
@@ -39,11 +39,11 @@ const ImageSelector = () => {
           const isImgSelected = selectedImages.map(img => img.imageName).includes(image.imageName)
 
           return (<div onClick={() => handleImgClick(image)}>
-            <ImageContainer key={index} image={image} displayCaption={true} selectedOutline={isImgSelected} imgSize={100} />
+            <ImageContainer key={index} image={image} displayCaption={true} selectedOutline={isImgSelected} imgSize={100} captionBelow />
           </div>)
         })}
       </div>
-      <button onClick={handleAddBtnClick}>Add</button>
+      <button onClick={handleAddBtnClick} className={`btn addBtn ${selectedImages.length === 0 ? "disabledBtn" : null}`} disabled={selectedImages.length === 0}>Add</button>
     </div>
   )
 }

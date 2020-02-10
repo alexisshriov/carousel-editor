@@ -1,5 +1,8 @@
 .image-container{
   position: relative;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  background-color: rgb(82, 80, 80);
   
   .selected-image{
     box-sizing:border-box;
@@ -13,6 +16,10 @@
     bottom: 10px;
     margin: 0;
     padding: 0;
+    &.caption-below{
+      top:0;
+      position: relative;
+    }
   }
 }
 

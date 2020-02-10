@@ -1,0 +1,42 @@
+.main-container{
+  .main-header{
+    color: white;
+    background-color: rgb(5, 117, 203);
+    h1{
+      margin: 0 0 20px;
+      padding: 30px;
+      font-size: 50px;
+    }
+  }
+  .main-body{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .right-pane{
+    margin-left: 20px;
+  }
+
+  .btn{
+    bottom: 5px;
+    left: 150px;
+    border-radius:28px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:5px 31px;
+    text-decoration:none;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.disabledBtn{
+      opacity: 0.5;
+      transform: scale(1);
+    }
+  }
+}
+

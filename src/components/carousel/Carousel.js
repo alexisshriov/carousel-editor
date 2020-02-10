@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Toggle from 'react-toggle';
 
 import { useSelector } from 'react-redux'
@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setSelectorImages } from '../../actions/imageSelectorActions'
 import { setCarouselImages } from '../../actions/carouselActions'
 import CarouselSlot from '../carousel/CarouselSlot';
+import { LEFT, RIGHT, VIEW, EDIT } from '../../constants/constants'
 
 import "react-toggle/style.css";
 import './Carousel.scss';
@@ -15,7 +16,7 @@ const Carousel = () => {
   const dispatch = useDispatch()
 
   const [position, setPosition] = useState(0);
-  const [mode, setMode] = useState('View');
+  const [mode, setMode] = useState(VIEW);
   const [selectedImages, setSelectedImages] = useState([]);
   const [activeDot, setActiveDot] = useState(0)
   const [numPages, setNumPages] = useState(0)
@@ -25,12 +26,12 @@ const Carousel = () => {
   const carouselImages = useSelector(state => state.carouselImages)
 
   const handleClick = (direction) => {
-    if (direction === 'right') {
-      setPosition(position - getDistanceToMove('right'));
+    if (direction === RIGHT) {
+      setPosition(position - getDistanceToMove(RIGHT));
       setActiveDot(activeDot + 1)
     }
-    else if (direction === 'left') {
-      setPosition(position + getDistanceToMove('left'));
+    else if (direction === LEFT) {
+      setPosition(position + getDistanceToMove(LEFT));
       setActiveDot(activeDot - 1)
     }
   }
@@ -44,7 +45,7 @@ const Carousel = () => {
   }, [selectorImages, carouselImages, visibleSlots])
 
   const toggleMode = () => {
-    const newMode = mode === 'View' ? 'Edit' : 'View';
+    const newMode = mode === VIEW ? EDIT : VIEW;
 
     setMode(newMode)
   }
@@ -65,9 +66,9 @@ const Carousel = () => {
   const getDistanceToMove = (direction) => {
     let distance = 500;
 
-    if ((activeDot === (numPages - 1) && direction == 'left') || (activeDot === (numPages - 2) && direction == 'right')) {
+    if ((activeDot === (numPages - 1) && direction === LEFT) || (activeDot === (numPages - 2) && direction === RIGHT)) {
       const mod = carouselImages.length % visibleSlots;
-      if (mod != 0)
+      if (mod !== 0)
         distance = (distance / visibleSlots) * mod;
     }
     return distance;
@@ -75,7 +76,6 @@ const Carousel = () => {
 
   return (
     <div className="carousel">
-      <p>Carousel</p>
       <div className="carousel-controls">
         <div className="mode-selector">
           <Toggle defaultChecked={false} icons={false} onChange={toggleMode} /><span>{mode} Mode</span>
@@ -99,10 +99,14 @@ const Carousel = () => {
             return <div class={`dot ${activeDot === dot ? "active-dot" : null}`} />
           })}
       </div>
-      <button disabled={activeDot === 0} onClick={() => handleClick('left')}>left</button>
-      <button disabled={activeDot === numPages - 1} onClick={() => handleClick('right')}>right</button>
+      {carouselImages.length > 0 &&
+        <div className="pag-buttons">
+          <button disabled={activeDot === 0} onClick={() => handleClick(LEFT)}>Prev</button>
+          <button disabled={activeDot === numPages - 1} onClick={() => handleClick(RIGHT)}>Next</button>
+        </div>}
       <div>
-        {mode === 'Edit' ? <button onClick={handleDeleteBtnClick}>Delete</button> : null}
+        {mode === EDIT &&
+          <button onClick={handleDeleteBtnClick} className={`btn deleteBtn ${selectedImages.length === 0 ? "disabledBtn" : null}`} disabled={selectedImages.length === 0}>Delete</button>}
       </div>
     </div>
   )

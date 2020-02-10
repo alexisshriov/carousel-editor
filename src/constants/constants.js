@@ -1,5 +1,8 @@
 export const VIEW = "View";
 export const EDIT = "Edit";
+export const LEFT = "Left";
+export const RIGHT = "Right";
+
 
 
 export const SET_SELECTOR_IMAGES = "SET_SELECTOR_IMAGES";
