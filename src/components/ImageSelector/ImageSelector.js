@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import ImageContainer from "../common/ImageContainer";
 import { compare } from "../common/CommonFunctions"
 
-// import allImages from '../../carouselImages.json';
 import './ImageSelector.scss'
 
-// const images=[
-//   letterBoardIc, listenHat, listenV02, listeningBell, listeningCap, listeningCup, listeningDoll, matchingAbc, matchingBears, matchingBirds,
-//   matchingFriends, matchingZoo,orderItCake, orderItToyN, paintPotBlue, paintPotRed, petIc, princessIc, robotIc, spaceIc
-// ]
-
 const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCarouselImages}) => {
-  // const [images, setImages] = useState(allImages.carouselImages)
   const [selectedImages, setSelectedImages] = useState([])
 
   const handleImgClick = (img) => {
@@ -41,8 +34,6 @@ const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCa
           return (<div onClick={() => handleImgClick(image)}>
             <ImageContainer key={index} image={image} displayCaption={true} selectedOutline={isImgSelected} imgSize={100} />
           </div>)
-
-          // return  <img  className={isImgSelected?'selected-image': null} src={`/images/${image.imageName}`}  alt="selectable-image" />
         })}
       </div>
       <button onClick={handleAddBtnClick}>Add</button>

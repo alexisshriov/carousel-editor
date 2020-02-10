@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Toggle from 'react-toggle';
+
 import "react-toggle/style.css";
-import { imgContext } from '../../context';
-import CarouselSlot from './CarouselSlot';
 import './Carousel.scss';
 import { compare } from '../common/CommonFunctions';
 
 const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages, setSelectedCarouselImg }) => {
-  // const [imgSize, setImgSize] = useContext(imgContext)
-  // const [visibleSlots, setVisibleSlots] = useState(2);  //param modified by user
-
-  //const offSet = children.length % 2 === 0 ? (imgSize/visibleSlots) / 2 : 0;
 
   const [position, setPosition] = useState(0);
   const [mode, setMode] = useState('View');
@@ -18,20 +13,28 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
   const [activeDot, setActiveDot] = useState(0)
   const [numPages, setNumPages] = useState(0)
 
-
-  // const [offset, setOffset] = useState(offSet);
-
   const handleClick = (direction) => {
-    if (direction === 'right'){
-      setPosition(position - carouselViewSize);
-      setActiveDot(activeDot+1)
-    }
- //setPosition(position + imgSize * visibleSlots);
-    else {
+    let distance = getDistanceToMove()
 
-      setPosition(position + carouselViewSize);
-      setActiveDot(activeDot-1)
+    if (direction === 'right') {
+      setPosition(position - distance);
+      setActiveDot(activeDot + 1)
     }
+    else if (direction === 'left') {
+      setPosition(position + distance);
+      setActiveDot(activeDot - 1)
+    }
+  }
+
+  const getDistanceToMove = (direction) => {
+    let distance = carouselViewSize;
+
+    if ((activeDot === numPages - 1) || (activeDot === numPages - 2)) {
+      const mod = carouselImages.length % visibleSlots;
+      if (mod != 0)
+        distance = (distance / visibleSlots) * mod;
+    }
+    return distance;
   }
 
   useEffect(() => {
