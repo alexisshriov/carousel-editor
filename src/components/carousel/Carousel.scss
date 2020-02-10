@@ -1,15 +1,16 @@
 $base-color: rgb(9, 100, 169);
+$base-width: 500px;
 
 .carousel{
   border: lightgray solid 1px;
-  width: 500px;
+  width: $base-width;
   height: 370px;
   margin: 0 auto;
   position: relative;
 
   .view-container{
     background-color: gray;
-    width: 500px;
+    width: $base-width;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -44,6 +45,7 @@ $base-color: rgb(9, 100, 169);
   
     .items-selector{
       margin: 18px 0 0;
+      
       select{
         width: 100px;
         margin-left: 10px;

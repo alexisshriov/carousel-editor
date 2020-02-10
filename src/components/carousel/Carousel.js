@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Toggle from 'react-toggle';
-
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { setSelectorImages } from '../../actions/imageSelectorActions'
-import { setCarouselImages } from '../../actions/carouselActions'
+
+import Toggle from 'react-toggle';
 import CarouselSlot from '../carousel/CarouselSlot';
-import { LEFT, RIGHT, VIEW, EDIT } from '../../constants/constants'
+import { setSelectorImages } from '../../actions/imageSelectorActions';
+import { setCarouselImages } from '../../actions/carouselActions';
+import { compare } from '../common/CommonFunctions';
+import { LEFT, RIGHT, VIEW, EDIT } from '../../constants/constants';
 
 import "react-toggle/style.css";
 import './Carousel.scss';
-import { compare } from '../common/CommonFunctions';
 
 const Carousel = () => {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const Carousel = () => {
   const selectorImages = useSelector(state => state.selectorImages)
   const carouselImages = useSelector(state => state.carouselImages)
 
-  const handleClick = (direction) => {
+  const handlePageBtnClick = (direction) => {
     if (direction === RIGHT) {
       setPosition(position - getDistanceToMove(RIGHT));
       setActiveDot(activeDot + 1)
@@ -94,15 +94,12 @@ const Carousel = () => {
         </div>
       </div>
       <div className="carousel-dots">
-        {
-          [...Array(numPages).keys()].map(dot => {
-            return <div class={`dot ${activeDot === dot ? "active-dot" : null}`} />
-          })}
+        {[...Array(numPages).keys()].map(dot => {return <div class={`dot ${activeDot === dot ? "active-dot" : null}`} />})}
       </div>
       {carouselImages.length > 0 &&
         <div className="pag-buttons">
-          <button disabled={activeDot === 0} onClick={() => handleClick(LEFT)}>Prev</button>
-          <button disabled={activeDot === numPages - 1} onClick={() => handleClick(RIGHT)}>Next</button>
+          <button disabled={activeDot === 0} onClick={() => handlePageBtnClick(LEFT)}>Prev</button>
+          <button disabled={activeDot === numPages - 1} onClick={() => handlePageBtnClick(RIGHT)}>Next</button>
         </div>}
       <div>
         {mode === EDIT &&

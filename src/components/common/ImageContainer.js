@@ -4,7 +4,7 @@ import './ImageContainer.scss'
 const ImageContainer = ({ image, displayCaption, imgSize, selectedOutline, captionBelow }) => {
   return (
     imgSize && <div className="image-container">
-      <img className={selectedOutline ? "selected-image" : null} src={`/images/${image.imageName}`} style={{ minWidth: imgSize, height: imgSize }} />
+      <img className={selectedOutline ? "selected-image" : null} src={`/images/${image.imageName}`} style={{ minWidth: imgSize, height: imgSize }} alt="loaded-img" />
       <p className={`image-caption ${captionBelow ? "caption-below" : null}`}>{displayCaption && image.imageCaption}</p>
     </div>
   )

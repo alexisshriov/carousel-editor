@@ -1,6 +1,8 @@
+$base-size: 500px;
+
 .image-viewer{
-  min-width: 500px;
-  min-height: 500px;
+  min-width: $base-size;
+  min-height: $base-size;
   border: solid lightgray 1px;
   margin: 20px 0 50px;
 }

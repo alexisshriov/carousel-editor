@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
-import './Main.scss'
 
 import Carousel from '../carousel/Carousel'
 import ImageSelector from '../imageSelector/ImageSelector';
 import allImages from '../../carouselImages.json';
-import ImageViewer from '../ImageViewer/ImageViewer'
-import { compare } from '../common/CommonFunctions'
-import { setSelectorImages } from '../../actions/imageSelectorActions'
+import ImageViewer from '../ImageViewer/ImageViewer';
+import { compare } from '../common/CommonFunctions';
+import { setSelectorImages } from '../../actions/imageSelectorActions';
+
+import './Main.scss';
 
 const Main = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(setSelectorImages(allImages.carouselImages.sort(compare)));
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="main-container">

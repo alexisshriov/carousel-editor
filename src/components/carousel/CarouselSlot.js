@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import './CarouselSlot.scss';
+
 import ImageContainer from '../common/ImageContainer'
 import { setCurrentViewerImage } from '../../actions/imageViewerActions'
 
+import './CarouselSlot.scss';
+
 const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode }) => {
-debugger
   const dispatch = useDispatch()
   const [displayCaption, setDisplayCaption] = useState(false)
 
@@ -14,7 +15,7 @@ debugger
     if (mode === 'View') {
       setSelectedImages([])
     }
-  }, [mode])
+  }, [mode, setSelectedImages])
 
   const handleClick = () => {
     if (mode === 'Edit' && !selectedImages.map(image => image.imageName).includes(img.imageName))
