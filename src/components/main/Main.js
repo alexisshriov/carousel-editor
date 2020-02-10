@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Carousel from '../carousel/Carousel';
 import ImageSelector from '../imageSelector/ImageSelector';
 import allImages from '../../carouselImages.json';
-import ImageViewer from '../ImageViewer/ImageViewer';
+import ImageViewer from '../imageViewer/ImageViewer';
 import { compare } from '../common/CommonFunctions';
 import { setSelectorImages } from '../../actions/imageSelectorActions';
 

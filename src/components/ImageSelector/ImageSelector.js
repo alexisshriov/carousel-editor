@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import React, { useState } from './node_modules/react';
+import { useSelector } from './node_modules/react-redux'
+import { useDispatch } from './node_modules/react-redux'
 
 import ImageContainer from "../common/ImageContainer";
 import { compare } from "../common/CommonFunctions";
