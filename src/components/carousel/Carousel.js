@@ -4,7 +4,7 @@ import "react-toggle/style.css";
 import { imgContext } from '../../context';
 import CarouselSlot from './CarouselSlot';
 import './Carousel.scss';
-import {compare} from '../common/CommonFunctions';
+import { compare } from '../common/CommonFunctions';
 
 const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages, setSelectedCarouselImg }) => {
   // const [imgSize, setImgSize] = useContext(imgContext)
@@ -15,19 +15,32 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
   const [position, setPosition] = useState(0);
   const [mode, setMode] = useState('View');
   const [selectedImages, setSelectedImages] = useState([]);
+  const [activeDot, setActiveDot] = useState(0)
+  const [numPages, setNumPages] = useState(0)
+
 
   // const [offset, setOffset] = useState(offSet);
 
   const handleClick = (direction) => {
-    if (direction === 'right')
-      setPosition(position + carouselViewSize); //setPosition(position + imgSize * visibleSlots);
-    else
+    if (direction === 'right'){
       setPosition(position - carouselViewSize);
+      setActiveDot(activeDot+1)
+    }
+ //setPosition(position + imgSize * visibleSlots);
+    else {
+
+      setPosition(position + carouselViewSize);
+      setActiveDot(activeDot-1)
+    }
   }
 
   useEffect(() => {
+    const numPages = Math.ceil(carouselImages.length / visibleSlots)
+
+    setNumPages(numPages)
+    setActiveDot(0)
     setPosition(0)
-  }, [selectorImages, carouselImages])
+  }, [selectorImages, carouselImages, visibleSlots])
 
   const toggleMode = () => {
     const newMode = mode === 'View' ? 'Edit' : 'View';
@@ -45,7 +58,6 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
   }
 
   const onSelectChange = (event) => {
-    debugger
     setVisibleSlots(event.target.value);
   }
 
@@ -69,13 +81,16 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
           })}
         </div>
       </div>
-      <button onClick={() => handleClick('right')}>left</button>
-      <button onClick={() => handleClick('left')}>right</button>
+      <div className="carousel-dots">
+        {
+          [...Array(numPages).keys()].map(dot => {
+            return <div class={`dot ${activeDot === dot ? "active-dot" : null}`} />
+          })}
+      </div>
+      <button disabled={activeDot === 0} onClick={() => handleClick('left')}>left</button>
+      <button disabled={activeDot === numPages - 1} onClick={() => handleClick('right')}>right</button>
       <div>
         {mode === 'Edit' ? <button onClick={handleDeleteBtnClick}>Delete</button> : null}
-      </div>
-      <div className="carousel-dots">
-          {/* {[1, 2, 3, 4].map(dot => <div></div>)} */}
       </div>
     </div>
   )
