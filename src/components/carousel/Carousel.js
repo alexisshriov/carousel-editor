@@ -18,45 +18,45 @@ const Carousel = () => {
   const [position, setPosition] = useState(0);
   const [mode, setMode] = useState(VIEW);
   const [selectedImages, setSelectedImages] = useState([]);
-  const [activeDot, setActiveDot] = useState(0)
-  const [numPages, setNumPages] = useState(0)
+  const [activeDot, setActiveDot] = useState(0);
+  const [numPages, setNumPages] = useState(0);
   const [visibleSlots, setVisibleSlots] = useState(2);
 
-  const selectorImages = useSelector(state => state.selectorImages)
-  const carouselImages = useSelector(state => state.carouselImages)
+  const selectorImages = useSelector(state => state.selectorImages);
+  const carouselImages = useSelector(state => state.carouselImages);
 
   const handlePageBtnClick = (direction) => {
     if (direction === RIGHT) {
       setPosition(position - getDistanceToMove(RIGHT));
-      setActiveDot(activeDot + 1)
+      setActiveDot(activeDot + 1);
     }
     else if (direction === LEFT) {
       setPosition(position + getDistanceToMove(LEFT));
-      setActiveDot(activeDot - 1)
+      setActiveDot(activeDot - 1);
     }
   }
 
   useEffect(() => {
-    const numPages = Math.ceil(carouselImages.length / visibleSlots)
+    const numPages = Math.ceil(carouselImages.length / visibleSlots);
 
-    setNumPages(numPages)
-    setActiveDot(0)
-    setPosition(0)
+    setNumPages(numPages);
+    setActiveDot(0);
+    setPosition(0);
   }, [selectorImages, carouselImages, visibleSlots])
 
   const toggleMode = () => {
     const newMode = mode === VIEW ? EDIT : VIEW;
 
-    setMode(newMode)
+    setMode(newMode);
   }
 
   const handleDeleteBtnClick = () => {
     const newSelectorImages = [...selectorImages, ...selectedImages].sort(compare)
     const newCarouselImages = carouselImages.filter(item => !selectedImages.includes(item)).sort(compare)
 
-    dispatch(setSelectorImages(newSelectorImages))
-    dispatch(setCarouselImages(newCarouselImages))
-    setSelectedImages([])
+    dispatch(setSelectorImages(newSelectorImages));
+    dispatch(setCarouselImages(newCarouselImages));
+    setSelectedImages([]);
   }
 
   const onSelectChange = (event) => {

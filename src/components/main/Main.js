@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 
-import Carousel from '../carousel/Carousel'
+import Carousel from '../carousel/Carousel';
 import ImageSelector from '../imageSelector/ImageSelector';
 import allImages from '../../carouselImages.json';
 import ImageViewer from '../ImageViewer/ImageViewer';

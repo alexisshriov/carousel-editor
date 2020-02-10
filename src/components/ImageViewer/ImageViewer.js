@@ -4,7 +4,7 @@ import ImageContainer from '../common/ImageContainer.js';
 import './ImageViewer.scss'
 
 const ImageViewer = () => {
-  const currentViewerImage = useSelector(state => state.currentViewerImage)
+  const currentViewerImage = useSelector(state => state.currentViewerImage);
 
   return (
     <div className="image-viewer">
