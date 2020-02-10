@@ -1,4 +1,13 @@
-export const VIEW = "View"
-export const EDIT = "Edit"
+export const VIEW = "View";
+export const EDIT = "Edit";
 
-export const ADD_SELECTOR_IMAGE = "ADD_SELECTOR_IMAGE"
+
+export const SET_SELECTOR_IMAGES = "SET_SELECTOR_IMAGES";
+
+export const SET_CAROUSEL_IMAGES = "SET_CAROUSEL_IMAGES";
+
+export const SET_CURRENT_VIEWER_IMAGE = "SET_CURRENT_VIEWER_IMAGE";
+
+
+
+

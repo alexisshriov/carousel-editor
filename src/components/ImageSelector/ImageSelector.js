@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import {useSelector} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import ImageContainer from "../common/ImageContainer";
-import { compare } from "../common/CommonFunctions"
+import { compare } from "../common/CommonFunctions";
+import { setSelectorImages } from '../../actions/imageSelectorActions'
+import { setCarouselImages } from '../../actions/carouselActions'
 
-import './ImageSelector.scss'
+import './ImageSelector.scss';
 
-const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCarouselImages}) => {
+const ImageSelector = () => {
+  const dispatch = useDispatch()
   const [selectedImages, setSelectedImages] = useState([])
+  const selectorImages = useSelector(state => state.selectorImages)
+  const carouselImages = useSelector(state => state.carouselImages)
 
   const handleImgClick = (img) => {
     if(!selectedImages.map(image => image.imageName).includes(img.imageName)){
@@ -20,8 +27,8 @@ const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCa
     const newCarouselImages = [...carouselImages, ...selectedImages].sort(compare)
     const newSelectorImages = selectorImages.filter(item => !selectedImages.includes(item)).sort(compare)
 
-    setCarouselImages(newCarouselImages)
-    setSelectorImages(newSelectorImages)
+    dispatch(setCarouselImages(newCarouselImages))
+    dispatch(setSelectorImages(newSelectorImages))
     setSelectedImages([])
   }
 

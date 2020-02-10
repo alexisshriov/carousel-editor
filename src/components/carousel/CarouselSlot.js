@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import './CarouselSlot.scss';
 import ImageContainer from '../common/ImageContainer'
+import { setCurrentViewerImage } from '../../actions/imageViewerActions'
 
-const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, setSelectedCarouselImg, mode }) => {
-
+const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode }) => {
+debugger
+  const dispatch = useDispatch()
   const [displayCaption, setDisplayCaption] = useState(false)
 
   useEffect(() => {
@@ -17,7 +20,7 @@ const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, setSele
     if (mode === 'Edit' && !selectedImages.map(image => image.imageName).includes(img.imageName))
       setSelectedImages([...selectedImages, img])
     else if (mode === 'View')
-      setSelectedCarouselImg(img)
+      dispatch(setCurrentViewerImage(img))
   }
 
   const handleMouseEnter = () => {

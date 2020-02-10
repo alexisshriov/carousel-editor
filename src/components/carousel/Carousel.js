@@ -1,40 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Toggle from 'react-toggle';
 
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { setSelectorImages } from '../../actions/imageSelectorActions'
+import { setCarouselImages } from '../../actions/carouselActions'
+import CarouselSlot from '../carousel/CarouselSlot';
+
 import "react-toggle/style.css";
 import './Carousel.scss';
 import { compare } from '../common/CommonFunctions';
 
-const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages, setSelectedCarouselImg }) => {
+const Carousel = () => {
+  const dispatch = useDispatch()
 
   const [position, setPosition] = useState(0);
   const [mode, setMode] = useState('View');
   const [selectedImages, setSelectedImages] = useState([]);
   const [activeDot, setActiveDot] = useState(0)
   const [numPages, setNumPages] = useState(0)
+  const [visibleSlots, setVisibleSlots] = useState(2);
+
+  const selectorImages = useSelector(state => state.selectorImages)
+  const carouselImages = useSelector(state => state.carouselImages)
 
   const handleClick = (direction) => {
-    let distance = getDistanceToMove()
-
     if (direction === 'right') {
-      setPosition(position - distance);
+      setPosition(position - getDistanceToMove('right'));
       setActiveDot(activeDot + 1)
     }
     else if (direction === 'left') {
-      setPosition(position + distance);
+      setPosition(position + getDistanceToMove('left'));
       setActiveDot(activeDot - 1)
     }
-  }
-
-  const getDistanceToMove = (direction) => {
-    let distance = carouselViewSize;
-
-    if ((activeDot === numPages - 1) || (activeDot === numPages - 2)) {
-      const mod = carouselImages.length % visibleSlots;
-      if (mod != 0)
-        distance = (distance / visibleSlots) * mod;
-    }
-    return distance;
   }
 
   useEffect(() => {
@@ -55,13 +53,24 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
     const newSelectorImages = [...selectorImages, ...selectedImages].sort(compare)
     const newCarouselImages = carouselImages.filter(item => !selectedImages.includes(item)).sort(compare)
 
-    setSelectorImages(newSelectorImages)
-    setCarouselImages(newCarouselImages)
+    dispatch(setSelectorImages(newSelectorImages))
+    dispatch(setCarouselImages(newCarouselImages))
     setSelectedImages([])
   }
 
   const onSelectChange = (event) => {
     setVisibleSlots(event.target.value);
+  }
+
+  const getDistanceToMove = (direction) => {
+    let distance = 500;
+
+    if ((activeDot === (numPages - 1) && direction == 'left') || (activeDot === (numPages - 2) && direction == 'right')) {
+      const mod = carouselImages.length % visibleSlots;
+      if (mod != 0)
+        distance = (distance / visibleSlots) * mod;
+    }
+    return distance;
   }
 
   return (
@@ -79,9 +88,9 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
 
       <div className="view-container">
         <div className="carousel-images" style={{ left: position }}>
-          {children.map(child => {
-            return React.cloneElement(child, { selectedImages, setSelectedImages, mode, setSelectedCarouselImg })
-          })}
+          {
+            carouselImages.map((img, index) => <CarouselSlot img={img} imgSize={500 / visibleSlots} mode={mode} key={index} selectedImages={selectedImages} setSelectedImages={setSelectedImages} />)
+          }
         </div>
       </div>
       <div className="carousel-dots">

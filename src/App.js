@@ -6,8 +6,9 @@ import Main from './components/main/Main';
 import './App.css';
 
 function App() {
+  const store = configureStore()
   return (
-    <Provider store={configureStore()}>
+    <Provider store={store}>
       <div className="App">
         <Main />
       </div>
