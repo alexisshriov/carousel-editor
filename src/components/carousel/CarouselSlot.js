@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 
 import CarouselImage from './CarouselImage';
 import './CarouselSlot.scss';
+import ImageContainer from '../common/ImageContainer'
 
-const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode }) => {
+const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, setSelectedCarouselImg, mode }) => {
 
   const [displayCaption, setDisplayCaption] = useState(false)
 
   useEffect(() => {
-   debugger
     if (mode === 'View') {
       setSelectedImages([])
     }
@@ -17,6 +17,8 @@ const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode })
   const handleClick = () => {
     if (mode === 'Edit' && !selectedImages.map(image => image.imageName).includes(img.imageName))
       setSelectedImages([...selectedImages, img])
+    else if (mode === 'View')
+      setSelectedCarouselImg(img)
   }
 
   const handleMouseEnter = () => {
@@ -27,17 +29,13 @@ const CarouselSlot = ({ img, imgSize, selectedImages, setSelectedImages, mode })
     setDisplayCaption(false)
   }
 
-  const getImageClasses = () => {
-    let classes = "image"
-    const isImageSelected = selectedImages.map(item => item.imageName).includes(img.imageName)
-    classes = isImageSelected ? `${classes} selected-image` : classes
-    return classes;
+  const isImageSelected = () => {
+    return selectedImages.map(item => item.imageName).includes(img.imageName)
   }
 
   return (
     <div className="carousel-slot" onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <img className={getImageClasses()} src={`/images/${img.imageName}`} style={{ minWidth: imgSize, height: imgSize }} />
-      <p className="image-caption">{mode === 'View' && displayCaption && img.imageCaption}</p>
+      <ImageContainer image={img} displayCaption={mode === 'View' && displayCaption} selectedOutline={isImageSelected()} imgSize={imgSize} />
     </div>
   )
 }

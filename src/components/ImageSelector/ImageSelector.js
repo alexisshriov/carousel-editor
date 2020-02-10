@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import ImageContainer from "../common/ImageContainer";
+import { compare } from "../common/CommonFunctions"
+
 // import allImages from '../../carouselImages.json';
 import './ImageSelector.scss'
 
@@ -29,24 +32,21 @@ const ImageSelector = ({carouselImages, selectorImages, setSelectorImages, setCa
     setSelectedImages([])
   }
 
-  const compare = ( a, b ) => {
-    if ( a.imageName < b.imageName ){
-      return -1;
-    }
-    if ( a.imageName > b.imageName ){
-      return 1;
-    }
-    return 0;
-  }
-
-  return(
+  return (
     <div className="image-selector">
-      {selectorImages.map((image, index) =>  {
-        const isImgSelected = selectedImages.map(img => img.imageName).includes(image.imageName)
-        return  <img key={index} className={isImgSelected?'selected-image': null} src={`/images/${image.imageName}`} onClick={() => handleImgClick(image)} alt="selectable-image" />})
-      }
+      <div className="images-grid">
+        {selectorImages.map((image, index) => {
+          const isImgSelected = selectedImages.map(img => img.imageName).includes(image.imageName)
+
+          return (<div onClick={() => handleImgClick(image)}>
+            <ImageContainer key={index} image={image} displayCaption={true} selectedOutline={isImgSelected} imgSize={100} />
+          </div>)
+
+          // return  <img  className={isImgSelected?'selected-image': null} src={`/images/${image.imageName}`}  alt="selectable-image" />
+        })}
+      </div>
       <button onClick={handleAddBtnClick}>Add</button>
-    </div> 
+    </div>
   )
 }
 export default ImageSelector;

@@ -2,12 +2,20 @@
   margin: 0 auto;
   width: 1000px;
   background-color: lavender;
-  img{
-    width: 100px;
-    height: 100px;
-  }
-  .selected-image{
-    box-sizing:border-box;
-    border: blue solid 5px;
+  // display: grid;
+  // grid-template-rows: 100px 100px;
+
+  // img{
+  //   width: 100px;
+  //   height: 100px;
+  // }
+  // .selected-image{
+  //   box-sizing:border-box;
+  //   border: blue solid 5px;
+  // }
+  .images-grid{
+    min-height: 200px;
+    display: grid;
+    grid-template-columns: repeat(10, 100px);
   }
 }

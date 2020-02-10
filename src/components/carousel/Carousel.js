@@ -4,8 +4,9 @@ import "react-toggle/style.css";
 import { imgContext } from '../../context';
 import CarouselSlot from './CarouselSlot';
 import './Carousel.scss';
+import {compare} from '../common/CommonFunctions';
 
-const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages }) => {
+const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, selectorImages, setSelectorImages, carouselImages, setCarouselImages, setSelectedCarouselImg }) => {
   // const [imgSize, setImgSize] = useContext(imgContext)
   // const [visibleSlots, setVisibleSlots] = useState(2);  //param modified by user
 
@@ -48,16 +49,6 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
     setVisibleSlots(event.target.value);
   }
 
-  const compare = (a, b) => {
-    if (a.imageName < b.imageName) {
-      return -1;
-    }
-    if (a.imageName > b.imageName) {
-      return 1;
-    }
-    return 0;
-  }
-
   return (
     <div className="carousel">
       <p>Carousel</p>
@@ -74,7 +65,7 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
       <div className="view-container">
         <div className="carousel-images" style={{ left: position }}>
           {children.map(child => {
-            return React.cloneElement(child, { selectedImages, setSelectedImages, mode })
+            return React.cloneElement(child, { selectedImages, setSelectedImages, mode, setSelectedCarouselImg })
           })}
         </div>
       </div>
@@ -82,6 +73,9 @@ const Carousel = ({ visibleSlots, setVisibleSlots, carouselViewSize, children, s
       <button onClick={() => handleClick('left')}>right</button>
       <div>
         {mode === 'Edit' ? <button onClick={handleDeleteBtnClick}>Delete</button> : null}
+      </div>
+      <div className="carousel-dots">
+          {/* {[1, 2, 3, 4].map(dot => <div></div>)} */}
       </div>
     </div>
   )
