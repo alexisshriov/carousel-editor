@@ -1,5 +1,7 @@
-## steps to run
+## description
+This project was created for the purpose of practicing React skills, it consists of a dinamic carousel
 
+## steps to run
 Go to the project directory and run run:
 
 ### `npm install`
